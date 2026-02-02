@@ -33,9 +33,7 @@ pipeline {
             steps {
                 echo 'Running Pytest...'
                 sh '''
-                    # Set PYTHONPATH so pytest can find your 'app' module
-                    export PYTHONPATH=$PYTHONPATH:.
-                    pytest tests/test_app.py
+                    python3 -m pytest tests/test_app.py
                 '''
             }
         }  
