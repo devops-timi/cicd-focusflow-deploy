@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>FocusFlow</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <h1>FocusFlow</h1>
+    {% block content %}{% endblock %}
+    <script src="{{ url_for('static', filename='app.js') }}"></script>
+</body>
+</html>

@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% block content %}
+
+<form method="POST">
+    <input type="text" name="title" placeholder="Add a task" required>
+    <button type="submit">Add</button>
+</form>
+
+<div class="filters">
+    <button onclick="filterTasks('all')">All</button>
+    <button onclick="filterTasks('active')">Active</button>
+    <button onclick="filterTasks('completed')">Completed</button>
+</div>
+
+<ul id="task-list">
+    {% for task in tasks %}
+        <li data-completed="{{ task.completed }}">
+            <input type="checkbox"
+                   {% if task.completed %}checked{% endif %}
+                   onchange="toggleTask({{ task.id }}, this)">
+            <span class="{% if task.completed %}done{% endif %}">
+                {{ task.title }}
+            </span>
+        </li>
+    {% endfor %}
+</ul>
+
+{% endblock %}
