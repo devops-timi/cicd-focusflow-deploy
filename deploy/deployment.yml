@@ -2,6 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: focusflow-app
+  namespace: default
   labels:
     app: focusflow-app
 spec:
