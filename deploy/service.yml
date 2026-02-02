@@ -4,7 +4,7 @@ metadata:
   name: focusflow-service
 spec:
   selector:
-    app: focusflow
+    app: focusflow-app
   ports:
     - protocol: TCP
       port: 80         # Port Traefik looks for
