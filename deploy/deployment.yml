@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: focusflow-app
+  labels:
+    app: focusflow-app
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: focusflow-app
+  template:
+    metadata:
+      labels:
+        app: focusflow-app
+    spec:
+      containers:
+      - name: focusflow-app
+        image: devopstimi/focusflow-cicd:replaceImageTag
+        ports:
+        - containerPort: 8080
