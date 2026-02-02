@@ -1,13 +1,14 @@
 pipeline {
     agent {
         docker { 
-            image 'python:3.14-alpine'
+            image 'python:3.12-alpine'
+            args '-v /var/run/docker.sock:/var/run/docker.sock -u root'
         }
     }
     stages {
         stage('Checkout') {
             steps {
-                sh 'echo passed'
+                checkout scm
                 //git branch: 'main', url: 'https://github.com/devops-timi/cicd-focusflow-deploy.git'
             }
         }
@@ -15,7 +16,7 @@ pipeline {
         stage('Initialize') {
             steps {
                 // Install docker-cli so this agent can talk to the host daemon
-                sh 'apk add --no-cache docker-cli'
+                sh 'apk add --no-cache docker-cli git'
             }
         }
         stage('Install Dependencies') {
@@ -23,7 +24,6 @@ pipeline {
                 sh '''
                     pip install --upgrade pip
                     pip install -r requirements.txt
-                    pip install pytest
                 '''
             }
         }
@@ -48,7 +48,7 @@ pipeline {
                     sh "docker build -t ${DOCKER_IMAGE} ."
                     def dockerImage = docker.image("${DOCKER_IMAGE}")
                     docker.withRegistry('https://index.docker.io/v1/', "docker-cred") {
-                        dockerImage.push()
+                        sh "docker push ${DOCKER_IMAGE}"
                     }
                 }
             }
@@ -64,6 +64,7 @@ pipeline {
                     sh """
                         git config user.email "tobalereko@gmail.com"
                         git config user.name "Timilehin Obalereko"
+                        git checkout main
                         BUILD_NUMBER=${BUILD_NUMBER}
                         sed -i "s/replaceImageTag/${BUILD_NUMBER}/g" deploy/deployment.yml
                         git add deploy/deployment.yml
