@@ -42,7 +42,7 @@ pipeline {
 
         stage('Build and Push Docker Image') {
             environment {
-                DOCKER_IMAGE = "devopstimi/focusflow:${BUILD_NUMBER}"
+                DOCKER_IMAGE = "devopstimi/focusflow-cicd:${BUILD_NUMBER}"
                 // DOCKERFILE_LOCATION = "Dockerfile"
                 REGISTRY_CREDENTIALS = credentials('docker-cred')
             }
