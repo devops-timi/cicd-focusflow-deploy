@@ -32,10 +32,13 @@ pipeline {
             steps {
                 echo 'Running Pytest...'
                 sh '''
-                    python3 -m pytest tests/test_app.py
+                    pwd
+                    ls -la
+                    ls -la tests/
+                    python3 -m pytest tests/test_app.py -v
                 '''
             }
-        }  
+        }
 
         stage('Build and Push Docker Image') {
             environment {
