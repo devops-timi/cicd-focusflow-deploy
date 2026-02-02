@@ -1,13 +1,12 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: focusflow-app-service
+  name: focusflow-service
 spec:
-  type: NodePort
-  ports:
-  - name: http
-    port: 80
-    targetPort: 5000
-    protocol: TCP
   selector:
-    app: focusflow-app
+    app: focusflow
+  ports:
+    - protocol: TCP
+      port: 80         # Port Traefik looks for
+      targetPort: 5000 # Port your Python app is running on
+  type: ClusterIP
