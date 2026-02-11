@@ -7,13 +7,12 @@ pipeline {
         stage('Test App') {
             agent {
                 docker { 
-                    image 'python:3.12-slim'
+                    image 'python:3.12-alpine'
                 }
             }
             steps {
                 echo 'Running Pytest...'
                 sh '''
-                    pip install --upgrade pip
                     pip install -r requirements.txt
                     python3 -m pytest tests/test_app.py
                 '''
