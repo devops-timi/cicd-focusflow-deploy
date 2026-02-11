@@ -3,12 +3,6 @@ pipeline {
     agent none 
 
     stages {
-        stage('Checkout') {
-            steps {
-                checkout scm
-                //git branch: 'main', url: 'https://github.com/devops-timi/cicd-focusflow-deploy.git'
-            }
-        }
 
         stage('Test App') {
             agent {
