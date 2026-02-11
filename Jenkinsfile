@@ -50,6 +50,7 @@ pipeline {
                         git config --global user.name "Timilehin Obalereko"
                         
                         # Clone the repo fresh
+                        rm -rf temp_repo
                         git clone https://${GITHUB_TOKEN}@github.com/${GIT_USER_NAME}/${GIT_REPO_NAME}.git temp_repo
                         cd temp_repo
                         
