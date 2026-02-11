@@ -1,10 +1,7 @@
 pipeline {
-    agent {
-        docker { 
-            image 'python:3.12-alpine'
-            args '-v /var/run/docker.sock:/var/run/docker.sock -u root'
-        }
-    }
+    
+    agent none 
+
     stages {
         stage('Checkout') {
             steps {
@@ -13,31 +10,24 @@ pipeline {
             }
         }
 
-        stage('Initialize') {
-            steps {
-                // Install docker-cli so this agent can talk to the host daemon
-                sh 'apk add --no-cache docker-cli git'
-            }
-        }
-        stage('Install Dependencies') {
-            steps {
-                sh '''
-                    pip install --upgrade pip
-                    pip install -r requirements.txt
-                '''
-            }
-        }
-
         stage('Test App') {
+            agent {
+                docker { 
+                    image 'python:3.12-alpine'
+                }
+            }
             steps {
                 echo 'Running Pytest...'
                 sh '''
+                    pip install --upgrade pip
+                    pip install -r requirements.txt
                     python3 -m pytest tests/test_app.py
                 '''
             }
         }  
 
         stage('Build and Push Docker Image') {
+            agent any
             environment {
                 DOCKER_IMAGE = "devopstimi/focusflow-cicd:${BUILD_NUMBER}"
                 // DOCKERFILE_LOCATION = "Dockerfile"
