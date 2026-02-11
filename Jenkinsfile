@@ -7,7 +7,7 @@ pipeline {
         stage('Test App') {
             agent {
                 docker { 
-                    image 'python:3.12-alpine'
+                    image 'python:3.12-slim'
                 }
             }
             steps {
