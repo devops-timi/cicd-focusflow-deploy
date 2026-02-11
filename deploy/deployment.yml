@@ -17,6 +17,6 @@ spec:
     spec:
       containers:
       - name: focusflow-app
-        image: devopstimi/focusflow-cicd:3
+        image: devopstimi/focusflow-cicd:replaceImageTag
         ports:
         - containerPort: 5000
